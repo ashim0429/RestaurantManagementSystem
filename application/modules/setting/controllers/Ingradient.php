@@ -16,13 +16,8 @@ class Ingradient extends MX_Controller {
  
     public function index($id = null)
     {
-        
 		$this->permission->method('setting','read')->redirect();
         $data['title']    = display('ingradient_list'); 
-        #-------------------------------#       
-        #
-        #pagination starts
-        #
         $config["base_url"] = base_url('setting/ingradient/index');
         $config["total_rows"]  = $this->ingradient_model->count_ingredient();
         $config["per_page"]    = 25;
@@ -45,7 +40,6 @@ class Ingradient extends MX_Controller {
         $config['first_tagl_close'] = "</li>";
         $config['last_tag_open'] = "<li>";
         $config['last_tagl_close'] = "</li>";
-        /* ends of bootstrap */
         $this->pagination->initialize($config);
         $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
         $data["ingredientlist"] = $this->ingradient_model->read_ingredient($config["per_page"], $page);
@@ -56,9 +50,6 @@ class Ingradient extends MX_Controller {
 		$data['intinfo']   = $this->unit_model->findById($id);
 	   }
 	    $data['unitdropdown']   =  $this->unit_model->ingredient_dropdown();
-        #
-        #pagination ends
-        #   
         $data['module'] = "setting";
         $data['page']   = "ingredientlist";   
         echo Modules::run('template/layout', $data); 

@@ -793,8 +793,7 @@ INSERT INTO `ingredients` (`id`, `ingredient_name`, `uom_id`, `is_active`) VALUE
 INSERT INTO `ingredients` (`id`, `ingredient_name`, `uom_id`, `is_active`) VALUES ('11', 'salt', '1', '1');
 INSERT INTO `ingredients` (`id`, `ingredient_name`, `uom_id`, `is_active`) VALUES ('12', 'hamburger buns', '7', '1');
 INSERT INTO `ingredients` (`id`, `ingredient_name`, `uom_id`, `is_active`) VALUES ('13', 'mayonnaise', '3', '1');
-INSERT INTO `ingredients` (`id`, `ingredient_name`, `uom_id`, `is_active`) VALUES ('14', 'tomato', '1', '1');
-
+INSERT INTO `ingredients` (`id`, `ingredient_name`, ``, `is_active`) VALUES ('14', 'tomato', '1', '1');
 
 #
 # TABLE STRUCTURE FOR: item_category

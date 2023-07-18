@@ -21,6 +21,18 @@
             </div>
         </div>
     </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-2">
+        <div class="panel home-panel-bd bg-gradient-custom-teal d-flex align-items-center justify-content-center">
+            <div class="panel-body">
+                <div class="statistic-box text-center text-white">
+                    <h2><span class="count-number"><?php echo $totalamount; ?></span> <span class="slight"> </span></h2>
+                    <div class="lifeord"><?php echo display('totalsale') ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-2">
         <div class="panel home-panel-bd bg-gradient-custom-teal d-flex align-items-center justify-content-center">
             <div class="panel-body">
@@ -53,23 +65,10 @@
             </div>
         </div>
     </div>
-
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-2">
-        <div class="panel home-panel-bd bg-gradient-yellow-red d-flex align-items-center justify-content-center">
-            <div class="panel-body">
-                <div class="statistic-box text-center text-white">
-                    <h2><span class="count-number"><?php echo $totalreservation; ?></span> <span class="slight"> </span></h2>
-                    <div class="lifeord"><?php echo display('treserv') ?></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </div>
+
 <div class="row">
-    <!-- Latest Order -->
-    <div class="col-sm-12 col-md-4">
+    <div class="col-sm-12 col-md-6">
         <div class="panel panel-bd ">
             <div class="panel-heading">
                 <div class="panel-title">
@@ -95,8 +94,8 @@
             </div>
         </div>
     </div>
-    <!-- Latest Reservation -->
-    <div class="col-sm-12 col-md-4">
+
+    <div class="col-sm-12 col-md-6">
         <div class="panel panel-bd">
             <div class="panel-heading">
                 <div class="panel-title">
@@ -123,8 +122,8 @@
             </div>
         </div>
     </div>
-    <!-- Online Order -->
-    <div class="col-sm-12 col-md-4">
+
+    <!-- <div class="col-sm-12 col-md-4">
         <div class="panel panel-bd">
             <div class="panel-heading">
                 <div class="panel-title">
@@ -151,10 +150,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
+
 <div class="row">
-    <!-- Monthly Sales Amount and Order -->
     <div class="col-sm-12 col-md-4">
         <div class="panel panel-bd">
             <div class="panel-heading">
@@ -254,6 +253,7 @@
         </div>
     </div>
 </div>
+
 <input name="monthname" id="monthname" type="hidden" value="<?php echo $monthname; ?>" />
 <input name="monthlysaleamount" id="monthlysaleamount" type="hidden" value="<?php echo $monthlysaleamount; ?>" />
 <input name="monthlysaleorder" id="monthlysaleorder" type="hidden" value="<?php echo $monthlysaleorder; ?>" />
@@ -264,9 +264,10 @@
 <?php if (isset($_GET['status'])) { ?>
     <input name="registerclose" id="registerclose" type="hidden" value="<?php echo $_GET['status']; ?>" />
 <?php } ?>
-<!-- Chart js -->
+
 <script src="<?php echo base_url('assets/js/Chart.min.js') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('dashboard/home/chartjs') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('application/modules/dashboard/assest/js/chartdata.js'); ?>" type="text/javascript"></script>
-<?php //$this->load->view('include/homescript');
+<?php
+
 ?>

@@ -97,8 +97,6 @@
                                 <tbody id="addPurchaseItem">
                                     <tr>
                                         <td class="span3 supplier">
-                                      
-                                   
                                         <select name="product_id[]" id="product_id_1" class="postform resizeselect form-control" onchange="product_list(1)">
                     					<option value=""><?php echo display('select');?> <?php echo display('ingredients');?></option>
 										<?php foreach ($ingrdientslist as $ingrdients) {?>

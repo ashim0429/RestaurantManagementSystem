@@ -2498,7 +2498,6 @@ class App extends MY_Controller
 				$output['orderinfo'][$o]['billby'] = $cashierinfo->firstname . ' ' . $cashierinfo->lastname;
 				$output['orderinfo'][$o]['currency'] = $currencyinfo->curr_icon;
 				$output['orderinfo'][$o]['thankyou'] = display('thanks_you');
-				$output['orderinfo'][$o]['powerby'] = display('powerbybdtask');
 				$o++;
 			}
 			return $this->respondWithSuccess('Informations d\'impression.', $output);

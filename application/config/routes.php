@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | and its corresponding controller class/method. The segments in a
 | URL normally follow this pattern:
 |
-|	example.com/class/method/id/
+| example.com/class/method/id/
 |
 | In some instances, however, you may want to remap this relationship
 | so that a different class/function is called than the one
@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 | Please see the user guide for complete details:
 |
-|	https://codeigniter.com/user_guide/general/routing.html
+| https://codeigniter.com/user_guide/general/routing.html
 |
 | -------------------------------------------------------------------------
 | RESERVED ROUTES
@@ -31,10 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | URI contains no data. In the above example, the "welcome" class
 | would be loaded.
 |
-|
 | This route will tell the Router which controller/method to use if those
 | provided in the URL cannot be matched to a valid route.
-|
 |
 | This is not exactly a route, but allows you to automatically route
 | controller and method names that contain dashes. '-' isn't a valid
@@ -45,6 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+
 $route["default_controller"] = "hungry";
 $route['login']  = "dashboard/auth/index";
 $route['logout'] = "dashboard/auth/logout";
@@ -74,9 +73,6 @@ $route['app-terms'] = "hungry/termsqr";
 $route['app-refund-policty'] = "hungry/refundpolicyqr";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
-//Qr Route
-
 
 
 //set modules/config/routes.php

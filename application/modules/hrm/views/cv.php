@@ -53,11 +53,6 @@ foreach ($cv as $row) {
                             <th> <?php echo display('parmanent_address') ?></th>
                             <td><?php echo $row->parmanent_address; ?></td>
                         </tr>
-
-
-
-
-
                     </table>
 
                 </div>
@@ -101,17 +96,17 @@ foreach ($cv as $row) {
                     </thead>
                     <tbody>
                         <?php if (!empty($edu)) { ?>
-                        <?php $sl = 1; ?>
-                        <?php foreach ($edu as $que) { ?>
-                        <tr class="<?php echo ($sl & 1) ? "odd gradeX" : "even gradeC" ?>">
+                            <?php $sl = 1; ?>
+                            <?php foreach ($edu as $que) { ?>
+                                <tr class="<?php echo ($sl & 1) ? "odd gradeX" : "even gradeC" ?>">
 
-                            <td><?php echo $que->degree_name; ?></td>
-                            <td><?php echo $que->university_name; ?></td>
-                            <td><?php echo $que->cgp; ?></td>
+                                    <td><?php echo $que->degree_name; ?></td>
+                                    <td><?php echo $que->university_name; ?></td>
+                                    <td><?php echo $que->cgp; ?></td>
 
-                        </tr>
+                                </tr>
 
-                        <?php } ?>
+                            <?php } ?>
                         <?php } ?>
                     </tbody>
                 </table>
@@ -147,18 +142,18 @@ foreach ($cv as $row) {
                     </thead>
                     <tbody>
                         <?php if (!empty($wrk)) { ?>
-                        <?php $sl = 1; ?>
-                        <?php foreach ($wrk as $que) { ?>
-                        <tr class="<?php echo ($sl & 1) ? "odd gradeX" : "even gradeC" ?>">
+                            <?php $sl = 1; ?>
+                            <?php foreach ($wrk as $que) { ?>
+                                <tr class="<?php echo ($sl & 1) ? "odd gradeX" : "even gradeC" ?>">
 
-                            <td><?php echo $que->company_name; ?></td>
-                            <td><?php echo $que->working_period; ?></td>
-                            <td><?php echo $que->duties; ?></td>
-                            <td><?php echo $que->supervisor; ?></td>
+                                    <td><?php echo $que->company_name; ?></td>
+                                    <td><?php echo $que->working_period; ?></td>
+                                    <td><?php echo $que->duties; ?></td>
+                                    <td><?php echo $que->supervisor; ?></td>
 
-                        </tr>
+                                </tr>
 
-                        <?php } ?>
+                            <?php } ?>
                         <?php } ?>
                     </tbody>
                 </table>
