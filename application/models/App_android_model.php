@@ -535,6 +535,7 @@ class App_android_model extends CI_Model
         return $query->result();
 		}
 	#check productiondetails
+	
 	public function checkproductiondetails($foodid,$fvid,$foodqty)
 	{
 		$checksetitem=$this->db->select('ProductsID,isgroup')->from('item_foods')->where('ProductsID',$foodid)->where('isgroup',1)->get()->row();

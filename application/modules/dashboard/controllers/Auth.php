@@ -16,14 +16,11 @@ class Auth extends MX_Controller {
  
 
 	public function index()
-	{  
-	//echo "Bla Bla";
-	
+	{
 		if($this->session->userdata('isLogIn'))
 			redirect('dashboard/home');
-		$data['title']    = display('login'); 
-		#-------------------------------------#
-	
+		$data['title']    = display('login');
+
 		$this->form_validation->set_rules('email', display('email'), 'required|valid_email|max_length[100]|trim');
 		$this->form_validation->set_rules('password', display('password'), 'required|max_length[32]|md5|trim');
 		$this->form_validation->set_rules('captcha', display('captcha'),  array('matches[captcha]', function($captcha){ 
@@ -35,12 +32,13 @@ class Auth extends MX_Controller {
 		    )
 		);
 		
-		#-------------------------------------#
+
 		$data['user'] = (object)$userData = array(
 			'email' 	 => $this->input->post('email',true),
 			'password'   => $this->input->post('password',true),
 		);
-		#-------------------------------------#
+	
+		
 		if ( $this->form_validation->run())
 		{
 			$this->session->unset_userdata('captcha');
@@ -50,6 +48,7 @@ class Auth extends MX_Controller {
 			if($user->num_rows() > 0) {
             $chef = $this->db->select('emp_his_id,employee_id,pos_id')->where('emp_his_id',$user->row()->id)->get('employee_history')->row();
 			$chefid='';
+
 			if(!empty($chef)) {
 					$shiftcheck = true;
 				$shiftmangment = $this->db->where('directory','shiftmangment')->where('status',1)->get('module')->num_rows();
@@ -71,10 +70,8 @@ class Auth extends MX_Controller {
 				redirect('login');
 					
 				}
-				
-			
 			}
-			
+
 			$checkPermission = $this->auth_model->userPermission2($user->row()->id);
 			if($checkPermission!=NULL){
 				$permission = array();

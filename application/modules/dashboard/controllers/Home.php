@@ -54,6 +54,9 @@ class Home extends MX_Controller
 		$data["todayorder"]  = $this->changeformat($todayorder);
 		$todayorderprice = $this->home_model->todayamount();
 
+		$totalamount = $this->home_model->totalamount();
+		$data['totalamount'] = $this->changeformat($totalamount);
+
 		if ($todayorderprice->amount < 1000) {
 			if ($todayorderprice->amount > 0) {
 				$data["todayamount"]  = $todayorderprice->amount . $currencyinfo->curr_icon;
@@ -87,6 +90,7 @@ class Home extends MX_Controller
 		$prevyearformat = $year - 1;
 		$syear = '';
 		$syearformat = '';
+		
 		for ($k = 1; $k < 13; $k++) {
 			$month = date('m', strtotime("+$k month"));
 			$gety = date('y', strtotime("+$k month"));
@@ -123,10 +127,11 @@ class Home extends MX_Controller
 		$query = $this->db->query($sql);
 		$topsell = $query->result();
 		$data["topseller"] = $topsell;
-
 		$data["monthname"] = trim($months, ',');
+		
 		echo Modules::run('template/layout', $data);
 	}
+
 	public function chartjs()
 	{
 		$allbasicinfo = "";
@@ -143,6 +148,7 @@ class Home extends MX_Controller
 		$prevyearformat = $year - 1;
 		$syear = '';
 		$syearformat = '';
+
 		for ($k = 1; $k < 13; $k++) {
 			$month = date('m', strtotime("+$k month"));
 			$gety = date('y', strtotime("+$k month"));
@@ -183,6 +189,7 @@ class Home extends MX_Controller
 		echo ('window.chartinfo = {"monthlysaleamount":"' . trim($monthlysaleamount, ', ') . '",monthlysaleorder:"' . trim($monthlysaleorder, ', ') . '","onlinesaleamount":"' . trim($onlinesaleamount, ', ') . '","onlinesaleorder":"' . trim($onlinesaleorder, ', ') . '","offlinesaleamount":"' . trim($offlinesaleamount, ', ') . '","offlinesaleorder":"' . trim($offlinesaleorder, ', ') . '","monthname":' . "'" . trim($monthname, ', ') . "'" . '};');
 		exit();
 	}
+
 	public function checkmonth()
 	{
 		$monyhyear = $this->input->post('monthyear');

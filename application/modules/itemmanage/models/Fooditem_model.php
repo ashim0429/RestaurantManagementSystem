@@ -48,10 +48,9 @@ class Fooditem_model extends CI_Model {
 				}
 			else{
 				return false;
-				}
-			
-		
+				}	
 	}
+
 	public function addsupplier($data = array())
 	{
 		return $this->db->insert('supplier', $data);
