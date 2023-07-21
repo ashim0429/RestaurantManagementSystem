@@ -11,6 +11,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-2">
         <div class="panel home-panel-bd bg-gradient-custom-pink d-flex align-items-center justify-content-center">
             <div class="panel-body">
@@ -37,7 +38,7 @@
         <div class="panel home-panel-bd bg-gradient-custom-teal d-flex align-items-center justify-content-center">
             <div class="panel-body">
                 <div class="statistic-box text-center text-white">
-                    <h2><span class="count-number"><?php echo $todayamount; ?></span></h2>
+                    <h2><span class="count-number"><?php echo $todayamount; ?></span><span class="slight"> </span></h2>
                     <div class="lifeord"><?php echo display('tdaysell') ?></div>
                 </div>
             </div>
@@ -206,6 +207,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Online Vs Offline Order and sales -->
     <div class="col-sm-12 col-md-8">
         <div class="panel panel-bd">

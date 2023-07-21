@@ -3957,6 +3957,7 @@ class Order extends MX_Controller
 			$this->db->update('customer_order', $updatetData2);
 		}
 	}
+
 	public function itemisready()
 	{
 		if ($this->permission->method('ordermanage', 'read')->access() == FALSE) {
@@ -4110,7 +4111,7 @@ class Order extends MX_Controller
 				$ready = array(
 					'preparetime' => date('Y-m-d H:i:s'),
 					'orderid'     => $orderid,
-					'menuid'     => $menuid,
+					// 'menuid'     => $menuid,
 					'varient'     => $varient
 				);
 				$this->db->insert('tbl_orderprepare', $ready);
@@ -4130,6 +4131,7 @@ class Order extends MX_Controller
 		$data['page']   = "kitchen_view";
 		$this->load->view('kitchen_view', $data);
 	}
+
 	public function counterboard()
 	{
 		if ($this->permission->method('ordermanage', 'read')->access() == FALSE) {
@@ -4148,7 +4150,6 @@ class Order extends MX_Controller
 	/*22-09*/
 	public function showpaymentmodal($id, $type = null)
 	{
-
 		$array_id  = array('order_id' => $id);
 		$order_info = $this->order_model->read('*', 'customer_order', $array_id);
 		$customer_info = $this->order_model->read('*', 'customer_info', array('customer_id' => $order_info->customer_id));
@@ -4181,7 +4182,6 @@ class Order extends MX_Controller
 		$settinginfo = $this->order_model->settinginfo();
 		$data['settinginfo'] = $settinginfo;
 		$data['currency'] = $this->order_model->currencysetting($settinginfo->currency);
-		//print_r($data['order_info']);
 		$data['ismerge'] = 1;
 		$data['duemerge'] = 0;
 		$data['paymentmethod']   = $this->order_model->pmethod_dropdown();
@@ -4291,8 +4291,6 @@ class Order extends MX_Controller
 			}
 		}
 
-		/*******end Point**************/
-
 		if ($discount > 0) {
 			$finaldis = $discount + $prebillinfo->discount;
 		} else {
@@ -4317,7 +4315,6 @@ class Order extends MX_Controller
 			$this->add_multipay($orderid, $billinfo->bill_id, $data_pay);
 			$i++;
 		}
-	
 
 		$cpaidamount =	$paidamount;
 		$orderinfo = $this->order_model->uniqe_order_id($orderid);
@@ -4338,6 +4335,7 @@ class Order extends MX_Controller
 		);
 		$this->db->where('order_id', $orderid);
 		$this->db->update('customer_order', $updatetData);
+
 		//Update Bill Table
 		if ($status == 4) {
 			$updatetbill = array(
@@ -4349,6 +4347,7 @@ class Order extends MX_Controller
 			$this->db->where('order_id', $orderid);
 			$this->db->update('bill', $updatetbill);
 		}
+
 		if ($status == 4) {
 			$this->removeformstock($orderid);
 			$orderinfo = $this->db->select('*')->from('customer_order')->where('order_id', $orderid)->get()->row();
@@ -4357,7 +4356,6 @@ class Order extends MX_Controller
 			$headn = $cusinfo->cuntomer_no . '-' . $cusinfo->customer_name;
 			$coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName', $headn)->get()->row();
 			$customer_headcode = $coainfo->HeadCode;
-
 			$invoice_no = $orderinfo->saleinvoice;
 			$saveid = $this->session->userdata('id');
 			$isvatinclusive = $this->db->select("*")->from('setting')->get()->row();
@@ -4368,14 +4366,14 @@ class Order extends MX_Controller
 				$finalbillamnt = $finalill->bill_amount;
 				$isvatin = 0;
 			}
-			//Customer debit for Product Value
+
 			$cosdr = array(
 				'VNo'            =>  $invoice_no,
 				'Vtype'          =>  'CIV',
 				'VDate'          =>  $orderinfo->order_date,
-				'COAID'          =>  $customer_headcode,
+				'COAID'          =>  $customer_headcode, // NULL
 				'Narration'      =>  'Customer debit for Product Invoice#' . $invoice_no,
-				'Debit'          =>  $finalbillamnt,
+				'Debit'          =>  round($finalbillamnt,2),
 				'Credit'         =>  0,
 				'StoreID'        =>  0,
 				'IsPosted'       => 1,
@@ -4383,8 +4381,9 @@ class Order extends MX_Controller
 				'CreateDate'     => $orderinfo->order_date,
 				'IsAppove'       => 1
 			);
+
 			$this->db->insert('acc_transaction', $cosdr);
-			//Store credit for Product Value
+
 			$sc = array(
 				'VNo'            =>  $invoice_no,
 				'Vtype'          =>  'CIV',
@@ -4392,16 +4391,16 @@ class Order extends MX_Controller
 				'COAID'          =>  10107,
 				'Narration'      =>  'Inventory Credit for Product Invoice#' . $invoice_no,
 				'Debit'          =>  0,
-				'Credit'         =>  $finalbillamnt,
+				'Credit'         =>  round($finalbillamnt,2),
 				'StoreID'        =>  0,
 				'IsPosted'       => 1,
 				'CreateBy'       => $saveid,
 				'CreateDate'     => $orderinfo->order_date,
 				'IsAppove'       => 1
 			);
+
 			$this->db->insert('acc_transaction', $sc);
 
-			// Customer Credit for paid amount.
 			$cc = array(
 				'VNo'            =>  $invoice_no,
 				'Vtype'          =>  'CIV',
@@ -4409,7 +4408,7 @@ class Order extends MX_Controller
 				'COAID'          =>  $customer_headcode,
 				'Narration'      =>  'Customer Credit for Product Invoice#' . $invoice_no,
 				'Debit'          =>  0,
-				'Credit'         =>  $finalbillamnt,
+				'Credit'         =>  round($finalbillamnt,2),
 				'StoreID'        =>  0,
 				'IsPosted'       => 1,
 				'CreateBy'       => $saveid,
@@ -4417,7 +4416,6 @@ class Order extends MX_Controller
 				'IsAppove'       => 1
 			);
 			$this->db->insert('acc_transaction', $cc);
-
 
 			// Income for company							 
 			$income = array(
@@ -4434,8 +4432,7 @@ class Order extends MX_Controller
 				'IsAppove'       => 1
 			);
 			$this->db->insert('acc_transaction', $income);
-
-			// Tax Pay for company		
+	
 			if ($isvatin != 1) {
 				$income = array(
 					'VNo'            => "Sale" . $orderinfo->saleinvoice,
@@ -4453,6 +4450,7 @@ class Order extends MX_Controller
 				$this->db->insert('acc_transaction', $income);
 			}
 		}
+		//sure aaudaina.
 
 		$logData = array(
 			'action_page'         => display('order_list'),
@@ -4461,6 +4459,7 @@ class Order extends MX_Controller
 			'user_name'           => $this->session->userdata('fullname'),
 			'entry_date'          => date('Y-m-d H:i:s'),
 		);
+
 		$this->logs_model->log_recorded($logData);
 		$this->savekitchenitem($orderid);
 		$data['ongoingorder']  = $this->order_model->get_ongoingorder();
@@ -4471,6 +4470,7 @@ class Order extends MX_Controller
 		echo $view;
 		exit;
 	}
+
 	public function savekitchenitem($orderid)
 	{
 		$this->permission->method('ordermanage', 'read')->redirect();
@@ -4586,8 +4586,6 @@ class Order extends MX_Controller
 		$countord = count($this->input->post('order', true));
 		$countpay = count($this->input->post('paytype', true));
 
-
-
 		foreach ($this->input->post('order', true) as $order_id) {
 			$this->removeformstock($order_id);
 			$this->db->where('order_id', $order_id)->delete('table_details');
@@ -4602,13 +4600,14 @@ class Order extends MX_Controller
 				'totalamount'            => $orderinfo->totalamount - $disamount,
 				'customerpaid'           => $orderinfo->totalamount - $disamount
 			);
+
 			$this->db->where('order_id', $order_id);
 			$this->db->update('customer_order', $updatetord);
 
 			$settinginfo = $this->order_model->settinginfo();
 			if ($settinginfo->printtype == 1 || $settinginfo->printtype == 3) {
 				$updatetDatap = array('invoiceprint' => 2);
-				$this->db->where('order_id', $orderid);
+				$this->db->where('order_id', $order_id);
 				$this->db->update('customer_order', $updatetDatap);
 			}
 
@@ -4633,14 +4632,17 @@ class Order extends MX_Controller
 			$data['mydigit'] = $midigit[$i];
 			$data['customer_id'] = $orderinfo->customer_id;
 			$data['paid'] = $orderinfo->totalamount;
+
 			$this->changestatusOrder($data);
 
 			$i++;
 		}
+
 		$ordarray = $this->input->post('order', true);
 		$checkismargeid = $this->db->select('*')->from('customer_order')->where('order_id', $ordarray[0])->get()->row();
+//
 		if (empty($checkismargeid)) {
-			$marge_order_id = date('Y-m-d') . _ . $data['rendom_number'];
+			$marge_order_id = date('Y-m-d') . '_' . $data['rendom_number'];
 		} else {
 			$marge_order_id = $checkismargeid->marge_order_id;
 		}
@@ -4683,9 +4685,11 @@ class Order extends MX_Controller
 	public function changeMargedue()
 	{
 		$data['rendom_number'] = generateRandomStr();
+
 		$i = 0;
 		$countord = count($this->input->post('order', true));
-		$marge_order_id = date('Y-m-d') . _ . $data['rendom_number'];
+		$marge_order_id = date('Y-m-d') . '_' . $data['rendom_number'];
+
 		foreach ($this->input->post('order', true) as $order_id) {
 			$updatetprebill = array(
 				'marge_order_id'              => $marge_order_id,
@@ -4695,6 +4699,7 @@ class Order extends MX_Controller
 		}
 		$this->checkprintdue($marge_order_id);
 	}
+
 	public function checkprintdue($marge_order_id)
 	{
 		$mydata['margeid'] = $marge_order_id;
@@ -4760,6 +4765,7 @@ class Order extends MX_Controller
 		$mydata['currency'] = $this->order_model->currencysetting($settinginfo->currency);
 		echo $viewprint = $this->load->view('posmargeprint', $mydata, true);
 	}
+
 	public function changestatusOrder($value)
 	{
 		$saveid = $this->session->userdata('id');
@@ -4779,8 +4785,9 @@ class Order extends MX_Controller
 
 		$orderinfo = $this->db->select('*')->from('customer_order')->where('order_id', $orderid)->get()->row();
 		$cusinfo = $this->db->select('*')->from('customer_info')->where('customer_id', $orderinfo->customer_id)->get()->row();
-		/***********Add pointing***********/
+
 		$customerid = $orderinfo->customer_id;
+		$finalgrandtotal = $this->input->post('grandtotal', true);
 		$scan = scandir('application/modules/');
 		$getcus = "";
 		foreach ($scan as $file) {
@@ -4831,8 +4838,7 @@ class Order extends MX_Controller
 			}
 		}
 
-		/*******end Point**************/
-		$marge_order_id = date('Y-m-d') . _ . $value['rendom_number'];
+		$marge_order_id = date('Y-m-d') . '_' . $value['rendom_number'];
 		$updatetData = array(
 			'marge_order_id' => $marge_order_id,
 			'order_status'     => $status,
@@ -4848,6 +4854,7 @@ class Order extends MX_Controller
 		);
 		$this->db->where('order_id', $orderid);
 		$this->db->update('bill', $updatetbill);
+
 		$billinfo = $this->db->select('*')->from('bill')->where('order_id', $orderid)->get()->row();
 		if (!empty($billinfo)) {
 			$billid = $billinfo->bill_id;
@@ -4949,9 +4956,9 @@ class Order extends MX_Controller
 			'VNo'            =>  $invoice_no,
 			'Vtype'          =>  'CIV',
 			'VDate'          =>  $orderinfo->order_date,
-			'COAID'          =>  $customer_headcode,
+			'COAID'          =>  $customer_headcode, //NULL
 			'Narration'      =>  'Customer debit for Product Invoice#' . $invoice_no,
-			'Debit'          =>  $finalbillamnt,
+			'Debit'          =>  round($finalbillamnt,2),
 			'Credit'         =>  0,
 			'StoreID'        =>  0,
 			'IsPosted'       => 1,
@@ -4960,7 +4967,7 @@ class Order extends MX_Controller
 			'IsAppove'       => 1
 		);
 		$this->db->insert('acc_transaction', $cosdr);
-		//Store credit for Product Value
+	
 		$sc = array(
 			'VNo'            =>  $invoice_no,
 			'Vtype'          =>  'CIV',
@@ -4977,7 +4984,8 @@ class Order extends MX_Controller
 		);
 		$this->db->insert('acc_transaction', $sc);
 
-		// Customer Credit for paid amount.
+//
+
 		$cc = array(
 			'VNo'            =>  $invoice_no,
 			'Vtype'          =>  'CIV',
@@ -5009,8 +5017,7 @@ class Order extends MX_Controller
 		);
 		$this->db->insert('acc_transaction', $income);
 
-		if ($isvatin != 1) {
-			// Tax Pay for company							 
+		if ($isvatin != 1) {						 
 			$income = array(
 				'VNo'            => "Sale" . $orderinfo->saleinvoice,
 				'Vtype'          => 'Sales Products Vat',
@@ -5026,7 +5033,6 @@ class Order extends MX_Controller
 			);
 			$this->db->insert('acc_transaction', $income);
 		}
-
 		$logData = array(
 			'action_page'         => display('order_list'),
 			'action_done'     	 => "Insert Data",
