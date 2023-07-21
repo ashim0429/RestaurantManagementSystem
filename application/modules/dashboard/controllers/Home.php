@@ -37,8 +37,6 @@ class Home extends MX_Controller
 		if ($this->permission->method('dashboard', 'read')->access() == FALSE) {
 			if (isset($_GET['status'])) {
 				redirect("dashboard/home/profile?status=done");
-			} else {
-				redirect("dashboard/home/profile");
 			}
 		}
 
@@ -53,18 +51,17 @@ class Home extends MX_Controller
 		$todayorder = $this->home_model->todayorder();
 		$data["todayorder"]  = $this->changeformat($todayorder);
 		$todayorderprice = $this->home_model->todayamount();
-
 		$totalamount = $this->home_model->totalamount();
-		$data['totalamount'] = $this->changeformat($totalamount);
+		$data['totalamount'] =$currencyinfo->curr_icon.$this->changeformat($totalamount);
 
 		if ($todayorderprice->amount < 1000) {
 			if ($todayorderprice->amount > 0) {
-				$data["todayamount"]  = $todayorderprice->amount . $currencyinfo->curr_icon;
+				$data["todayamount"]  = $currencyinfo->curr_icon.$todayorderprice->amount;
 			} else {
-				$data["todayamount"]  = "0";
+				$data["todayamount"]  = $currencyinfo->curr_icon."0";
 			}
 		} else {
-			$data["todayamount"]  =  $this->changeformat($todayorderprice->amount);
+			$data["todayamount"]  =  $currencyinfo->curr_icon.$this->changeformat($todayorderprice->amount);
 		}
 
 		$customer = $this->home_model->totalcustomer();
@@ -90,10 +87,11 @@ class Home extends MX_Controller
 		$prevyearformat = $year - 1;
 		$syear = '';
 		$syearformat = '';
-		
+
 		for ($k = 1; $k < 13; $k++) {
 			$month = date('m', strtotime("+$k month"));
 			$gety = date('y', strtotime("+$k month"));
+
 			if ($gety == $numbery) {
 				$syear = $prevyear;
 				$syearformat = $prevyearformat;
@@ -101,22 +99,22 @@ class Home extends MX_Controller
 				$syear = $numbery;
 				$syearformat = $year;
 			}
+
 			$monthly = $this->home_model->monthlysaleamount($syearformat, $month);
 			$odernum = $this->home_model->monthlysaleorder($syearformat, $month);
 			$monthlyonline = $this->home_model->onlinesaleamount($syearformat, $month);
 			$odernumonline = $this->home_model->onlinesaleorder($syearformat, $month);
 			$monthlyoffline = $this->home_model->offlinesaleamount($syearformat, $month);
 			$odernumoffline = $this->home_model->offlinesaleorder($syearformat, $month);
-
 			$salesamount .= $monthly . ', ';
 			$totalorder .= $odernum . ', ';
-
 			$salesamountonline .= $monthlyonline . ', ';
 			$totalorderonline .= $odernumonline . ', ';
 			$salesamountoffline .= $monthlyoffline . ', ';
 			$totalorderoffline .= $odernumoffline . ', ';
 			$months .=  date('F-' . $syear, strtotime("+$k month")) . ',';
 		}
+
 		$data["monthlysaleamount"] = trim($salesamount, ',');
 		$data["monthlysaleorder"] = trim($totalorder, ',');
 		$data["onlinesaleamount"] = trim($salesamountonline, ',');
@@ -128,7 +126,6 @@ class Home extends MX_Controller
 		$topsell = $query->result();
 		$data["topseller"] = $topsell;
 		$data["monthname"] = trim($months, ',');
-		
 		echo Modules::run('template/layout', $data);
 	}
 

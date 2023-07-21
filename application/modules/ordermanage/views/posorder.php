@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('application/modules/ordermanage/assets/css/posordernew.css'); ?>">
 <script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url('application/modules/ordermanage/assets/js/postop.js'); ?>" type="text/javascript"></script>
+
 <?php
 (int)$new_version  = file_get_contents('https://update.bdtask.com/bhojon/autoupdate/update_info');
 $myversion = current_version();
@@ -469,9 +470,7 @@ foreach ($scan as $file) {
           <li> <a href="#messages" role="tab" data-toggle="tab" class="torder newtab" id="todayorder" onclick="giveselecttab(this)"><i class="fa fa-first-order smallview"></i> <span class="responsiveview"><?php echo display('tdayorder'); ?></span> </a> </li>
           <?php if ($new_version != $myversion) {
             if ($versioncheck->version != $new_version) {
-          ?><li class="mobiletag">
-                <a href="<?php echo base_url("dashboard/autoupdate") ?>" class="updateanimate"><i class="fa fa-warning fa-warning-bg"></i><span class="f-size-weight">Update Available</span></a>
-              </li><?php }
+          ?><?php }
                 } ?>
           <li class="mobiletag"><a href="javascript:;" class="btn" onclick="closeopenresister()" role="button"><i class="fa fa-window-close fa-lg"></i></a></li>
           <li class="mobiletag"><a href="#"><i class="fa fa-keyboard hover-q text-muted" aria-hidden="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<table class='table table-condensed table-striped' >

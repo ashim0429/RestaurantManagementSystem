@@ -15,7 +15,6 @@ class Permission
 		$this->ci =& get_instance();
 	}
 
- 
 	public function access()
 	{ 
 		return $this->permission;
@@ -31,7 +30,6 @@ class Permission
 		}
 	}
 
-
 	public function module($module = null)
 	{
 		$module = (($module!=null)?strtolower($module):$this->ci->uri->segment(1));
@@ -43,8 +41,6 @@ class Permission
 		} 
 		return $this; 
 	}
-
-
 
 	public function check_label($label = null)
 	{
@@ -58,10 +54,8 @@ class Permission
 		return $this; 
 	}
 
-
 	public function method($module = null, $method = null)
 	{
-
 		$module = (($module!=null)?strtolower($module):$this->ci->uri->segment(1));
 		$method = strtolower($method);
 
@@ -69,10 +63,9 @@ class Permission
 			$this->permission = true;
 		} else {
 			$this->permission = false;
-		} 
+		}
 		return $this;
-	}	
-
+	}
 
 	public function create()
 	{   
@@ -151,9 +144,7 @@ class Permission
 
 
 	protected function check_label_to_Permission($label = null)
-	{ 
-		
-		
+	{
 		$permission = $this->ci->session->userdata('label_permission');
 		$isAdmin    = $this->ci->session->userdata('isAdmin');
 		$isLogIn    = $this->ci->session->userdata('isLogIn');
@@ -163,9 +154,8 @@ class Permission
 		} else if($isLogIn) {
 			if (($permission!=null)) {
 				$permission = json_decode($permission, true);
-				
 				$labels = array_keys(@$permission);
-				
+
 				//check current module permission
 				if (in_array($label, $labels) ) {
 					
@@ -181,19 +171,18 @@ class Permission
 		} 
 	}
 
-
 	protected function checkMethod($module = null, $method = null)
-	{ 
+	{
 		$permission = $this->ci->session->userdata('permission');
 		$isAdmin    = $this->ci->session->userdata('isAdmin');
 		$isLogIn    = $this->ci->session->userdata('isLogIn');
-
+		
 		if ($isLogIn && $isAdmin) {
-			//action of administrator
 			return true;
 		} else if($isLogIn) {
-
-			if (($permission!=null)) {
+			if (($permission= "null")) {
+				return false;
+			} else {
 				$permission = json_decode($permission, true);
 
 				//module list
@@ -214,18 +203,13 @@ class Permission
 						} else {
 							return false;
 						}	
-
 					} else {
 						return false;
-					} 
-
+					}
 				} else {
 					return false;
 				} 
-			} else {
-				return false;
 			}
-
 		} else {
 			return false;
 		} 

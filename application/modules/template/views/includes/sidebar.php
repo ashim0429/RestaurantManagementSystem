@@ -34,7 +34,7 @@
 			"counter_dashboard" => array("controller" => "order", "method" => "counterboard", "permission" => "read"),
 			"counter_list" => array("controller" => "order", "method" => "counterlist", "permission" => "read"),
 			// "pos_setting" => array("controller" => "order", "method" => "possetting", "permission" => "read"),
-			"sound_setting" => array("controller" => "order", "method" => "soundsetting", "permission" => "read")
+			// "sound_setting" => array("controller" => "order", "method" => "soundsetting", "permission" => "read")
 		);
 
 		$HmvcMenu2["reservation"] = array(

@@ -522,11 +522,8 @@
                         }
                         $calvat = $billinfo->VAT;
                         ?>
-
-
                     </div>
                 </div>
-
             </div>
             <div class="invoice-footer mb-15">
                 <div class="row-data">
@@ -591,8 +588,8 @@
                                             } else {
                                                 echo $sdcharge = $billinfo->service_charge;
                                             } ?><?php if ($currency->position == 2) {
-                                                                                                            echo $currency->curr_icon;
-                                                                                                        } ?></h5>
+                                                    echo $currency->curr_icon;
+                                                } ?></h5>
                 </div>
                 <div class="row-data">
                     <div class="item-info">
@@ -606,8 +603,8 @@
                                                 } else {
                                                     echo $discount = $billinfo->discount;
                                                 } ?> <?php if ($currency->position == 2) {
-                                                                                                                echo $currency->curr_icon;
-                                                                                                            } ?></h5>
+                                                            echo $currency->curr_icon;
+                                                        } ?></h5>
                 </div>
                 <div class="row-data border-top">
                     <div class="item-info">
