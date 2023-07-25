@@ -670,7 +670,7 @@
                                         <div class="form-group">
                                             <label for="s_name"><?php echo display('dob') ?><sup
                                                     class="color-red ">*</sup></label>
-                                            <input type="text" class="form-control datepicker" id="dob" name="dob"
+                                            <input type="date" class="form-control" name="dob"
                                                 placeholder="Date Of Birth" value="<?php echo $data->dob; ?>">
                                         </div>
                                     </div>

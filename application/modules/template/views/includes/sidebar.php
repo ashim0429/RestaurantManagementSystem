@@ -21,7 +21,7 @@
 		<?php
 		$path = 'application/modules/';
 		$map  = directory_map($path);
-		$HmvcMenu2   = array();
+		$HmvcMenu2   = [];
 
 		$HmvcMenu2["ordermanage"] = array(
 			"icon" => "<i class='fa fa-first-order' aria-hidden='true'></i>",
@@ -200,13 +200,15 @@
 			"award" => array(
 				"new_award" => array("controller" => "Award_controller", "method" => "create_award", "permission" => "create"),
 			),
-			"circularprocess" => array(
-				'add_canbasic_info'  => array("controller" => "Candidate", "method" => "caninfo_create", "permission" => "create"),
-				'can_basicinfo_list' => array("controller" => "Candidate", "method" => "candidateinfo_view", "permission" => "read"),
-				"candidate_shortlist" => array("controller" => "Candidate_select", "method" => "create_shortlist", "permission" => "create"),
-				"candidate_interview" => array("controller" => "Candidate_select", "method" => "create_interview", "permission" => "create"),
-				"candidate_selection" => array("controller" => "Candidate_select", "method" => "create_selection", "permission" => "create")
-			),
+
+			// "circularprocess" => array(
+			// 	'add_canbasic_info'  => array("controller" => "Candidate", "method" => "caninfo_create", "permission" => "create"),
+			// 	'can_basicinfo_list' => array("controller" => "Candidate", "method" => "candidateinfo_view", "permission" => "read"),
+			// 	"candidate_shortlist" => array("controller" => "Candidate_select", "method" => "create_shortlist", "permission" => "create"),
+			// 	"candidate_interview" => array("controller" => "Candidate_select", "method" => "create_interview", "permission" => "create"),
+			// 	"candidate_selection" => array("controller" => "Candidate_select", "method" => "create_selection", "permission" => "create")
+			// ),
+
 			"department" => array(
 				"department" => array("controller" => "Department_controller", "method" => "create_dept", "permission" => "create"),
 				"add_division" => array("controller" => "Division_controller", "method" => "division_form", "permission" => "create"),
@@ -219,11 +221,13 @@
 				"add_leave_type" => array("controller" => "Leave", "method" => "add_leave_type", "permission" => "read"),
 				"leave_application" => array("controller" => "Leave", "method" => "others_leave", "permission" => "read")
 			),
+
 			"loan" => array(
 				"loan_grand" => array("controller" => "Loan", "method" => "create_grandloan", "permission" => "read"),
 				"loan_installment" => array("controller" => "Loan", "method" => "create_installment", "permission" => "read"),
 				"loan_report" => array("controller" => "Loan", "method" => "loan_report", "permission" => "read")
 			),
+
 			"payroll" => array(
 				"salary_type_setup" => array("controller" => "Payroll", "method" => "create_salary_setup", "permission" => "read"),
 				"salary_setup" => array("controller" => "Payroll", "method" => "create_s_setup", "permission" => "create"),
@@ -238,7 +242,7 @@
 				if (file_exists(APPPATH . 'modules/' . $moduleName . '/assets/data/env'))
 					if ($this->permission->module($moduleName)->access()) {
 						$this->permission->module($moduleName)->access();
-
+		
 		?>
 				<li class="treeview ">
 					<a href="javascript:void(0)">
@@ -251,25 +255,18 @@
 					<ul class="treeview-menu">
 						<?php foreach ($moduleData as $groupLabel => $label) { ?>
 							<?php
-
 							if ($groupLabel != 'icon')
-
 								if ((isset($label['controller']) && $label['controller'] != null) && ($label['method'] != null)) {
-
 									if ($this->permission->check_label($groupLabel)->access()) {
-
 										if ($label['controller'] == 'dashboard') {
 											$furl = base_url($label['controller'] . "/" . $label['method']);
 										} else {
 											$furl = base_url($moduleName . "/" . $label['controller'] . "/" . $label['method']);
 										}
-
 							?>
-
 									<li class="<?php echo (($this->uri->segment(1) == $moduleName && $label['controller'] == $this->uri->segment(2) && $this->uri->segment(3) == $label['method']) ? "active" : null) ?>">
 										<a href="<?php echo $furl; ?>"><?php echo display($groupLabel) ?></a>
 									</li>
-
 								<?php
 									}
 								} else {
@@ -313,25 +310,8 @@
 			<!-- end foreach -->
 		<?php } ?>
 
-		<!-- <?php
-				$path = 'application/modules/';
-				$map  = directory_map($path);
-				$HmvcMenu   = array();
-				if (is_array($map) && sizeof($map) > 0)
-					foreach ($map as $key => $value) {
-						$menu = str_replace("\\", '/', $path . $key . 'config/menu.php');
-						if (file_exists($menu)) {
-
-							if (file_exists(APPPATH . 'modules/' . $key . '/assets/data/env')) {
-								@include($menu);
-							}
-						}
-					}
-				?> -->
-
-		<li class="header">Default </li>
-
 		<?php if ($this->session->userdata('isAdmin')) { ?>
+			<li class="header">Default </li>
 			<li class="treeview <?php echo (($this->uri->segment(2) == "user") ? "active" : null) ?>">
 				<a href="#">
 					<i class="ti-user"></i><span><?php echo display('user') ?></span>

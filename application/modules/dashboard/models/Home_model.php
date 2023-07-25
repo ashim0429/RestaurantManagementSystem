@@ -163,6 +163,7 @@ class Home_model extends CI_Model
 		}
 		return 0;
 	}
+
 	public function latestoreder()
 	{
 		$this->db->select('customer_order.*,customer_info.customer_name,customer_info.customer_phone,rest_table.tablename');

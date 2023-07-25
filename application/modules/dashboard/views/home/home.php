@@ -27,7 +27,10 @@
         <div class="panel home-panel-bd bg-gradient-custom-teal d-flex align-items-center justify-content-center">
             <div class="panel-body">
                 <div class="statistic-box text-center text-white">
-                    <h2><span class="count-number"><?php echo $totalamount; ?></span> <span class="slight"> </span></h2>
+                    <h2><span class="count-number"><?php if ($totalamount !== "Rs.") echo $totalamount;
+                                                    else {
+                                                        echo 0;
+                                                    } ?></span> <span class="slight"> </span></h2>
                     <div class="lifeord"><?php echo display('totalsale') ?></div>
                 </div>
             </div>
@@ -88,8 +91,10 @@
                                     <p class="inbox-item-text"><?php echo display('tabltno') ?>: <?php echo $order->tablename; ?></p>
                                     <p class="inbox-item-text"><?php echo display('time') ?>: <?php echo $order->order_time; ?></p>
                                 </div>
-                        <?php }
-                        } ?>
+                            <?php }
+                        } else { ?>
+                            <p class="text-center"> <i>There are no orders yet.</i> </p>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -116,8 +121,10 @@
                                     <p class="inbox-item-text"><?php echo display('time') ?>: <?php echo $order->formtime; ?></p>
 
                                 </div>
-                        <?php }
-                        } ?>
+                            <?php }
+                        } else { ?>
+                            <p class="text-center"> <i>There are no reservavations yet.</i> </p>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -207,7 +214,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Online Vs Offline Order and sales -->
     <div class="col-sm-12 col-md-8">
         <div class="panel panel-bd">
