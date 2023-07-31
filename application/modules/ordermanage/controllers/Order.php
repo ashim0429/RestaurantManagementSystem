@@ -26,6 +26,7 @@ class Order extends MX_Controller
 		$data['page']   = "possetting";
 		echo Modules::run('template/layout', $data);
 	}
+
 	public function settingenable()
 	{
 		$this->permission->method('ordermanage', 'read')->redirect();
@@ -37,6 +38,7 @@ class Order extends MX_Controller
 		$this->db->where('possettingid', 1);
 		$this->db->update('tbl_posetting', $updatetready);
 	}
+
 	public function quicksetting()
 	{
 		$this->permission->method('ordermanage', 'read')->redirect();
@@ -151,6 +153,7 @@ class Order extends MX_Controller
 			redirect("ordermanage/order/pos_invoice");
 		}
 	}
+
 	public function insert_customerord()
 	{
 		$this->permission->method('ordermanage', 'create')->redirect();
@@ -220,6 +223,7 @@ class Order extends MX_Controller
 				'CreateBy'         => $savedid,
 				'CreateDate'       => $createdate,
 			);
+		
 			$this->order_model->create_coa($postData1);
 			if ($this->order_model->insert_customer($postData)) {
 				$this->logs_model->log_recorded($logData);
@@ -293,7 +297,7 @@ class Order extends MX_Controller
 		$data['taxinfos'] = $this->taxchecking();
 		$data['module'] = "ordermanage";
 		$data['page']   = "posorder";
-		
+
 		echo Modules::run('template/layout', $data);
 	}
 
@@ -310,11 +314,13 @@ class Order extends MX_Controller
 		}
 		$this->load->view('ongoingorder_ajax', $data);
 	}
+
 	public function kitchenstatus()
 	{
 		$data['kitchenorder']  = $this->order_model->get_orderlist();
 		$this->load->view('kitchen_ajax', $data);
 	}
+
 	public function itemlist()
 	{
 		$orderid = $this->input->post('orderid');
@@ -322,10 +328,12 @@ class Order extends MX_Controller
 		$data['allcancelitem'] = $this->order_model->get_cancelitemlist($orderid);
 		$this->load->view('item_ajax', $data);
 	}
+
 	public function showtodayorder()
 	{
 		$this->load->view('todayorder');
 	}
+
 	public function showonlineorder()
 	{
 		$this->load->view('onlineordertable');

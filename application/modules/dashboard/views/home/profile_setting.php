@@ -7,10 +7,7 @@
                 </div>
             </div>
             <div class="panel-body">
-
-
                 <?php echo form_open_multipart("dashboard/home/setting") ?>
-                    
                     <?php echo form_hidden('id',$user->id) ?>
                     
                     <div class="form-group row">

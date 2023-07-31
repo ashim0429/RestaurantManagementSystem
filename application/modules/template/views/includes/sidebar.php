@@ -119,6 +119,9 @@
 
 				"table_setting" => array("controller" => "restauranttable", "method" => "tablesetting", "permission" => "read")
 			),
+			"room_manage" => array(
+				"room_list" => array("controller" => "restaurantroom", "method" => "index", "permission" => "read"),
+			),
 			"customer_type" => array(
 				"customer_list" => array("controller" => "customerlist", "method"  => "index", "permission" => "read"),
 				"customertype_list" => array("controller" => "customertype", "method" => "index", "permission" => "read"),
